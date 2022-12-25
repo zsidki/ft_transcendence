@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: radial-gradient(
+    56.32% 103.96% at 37.47% 107.32%,
+    #d9cbfd 0%,
+    #7758d1 100%
+  );
+  color: #fff;
+}
+
+/* CHAT BOX */
+.chat-box {
+  background: #1d203e;
+  box-shadow: inset 1px 0px 0px rgba(255, 255, 255, 0.1);
+}
+
+/* ONLINE TAG */
+.online-tag {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(100%, 130%);
+}
+
+.online-tag.green {
+  background: radial-gradient(100% 100% at 0% 0%, #0bef06 22.19%, #01b052 100%);
+}
+
+.online-tag.red {
+  background: radial-gradient(100% 100% at 0% 0%, #ef0606 22.19%, #b00101 100%);
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 76px;
+  height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  background: #1d203e4d;
+}
+
+.sidebar.active {
+  width: 16.666667%;
+}
+
+.sidebar .sidebar-header img:first-child {
+  margin-right: 0.75rem;
+}
+
+.sidebar .sidebar-header img:last-child {
+  display: none;
+  padding-top: 5px;
+}
+
+.sidebar.active .sidebar-header img:last-child {
+  display: block;
+}
+
+.sidebar.active a .sidebar-link-icon {
+  margin-right: 2.5rem;
+}
+
+.sidebar a .sidebar-link-text {
+  display: none;
+}
+
+.sidebar.active a .sidebar-link-text {
+  display: block;
+}
+
+.sidebar .sidebar-user-profile {
+  display: none;
+}
+
+.sidebar.active .sidebar-user-profile {
+  display: flex;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    rgba(0, 0, 0, 0.2);
+}
+
+/* TOP-PLAYERS */
+.top-players {
+  background: linear-gradient(
+    180deg,
+    rgba(80, 72, 128, 0.5) 0%,
+    rgba(80, 72, 128, 0.04) 100%
+  );
+  backdrop-filter: blur(2px);
+}
+
+.top-players .shadow {
+  background: linear-gradient(
+    103.96deg,
+    rgba(0, 0, 0, 0.2) 4.92%,
+    rgba(86, 86, 86, 0) 103.4%
+  );
+  /* stroke blue */
+
+  border: 1px solid rgba(0, 178, 255, 0.65);
+}
+
+.top-players .player-boxes {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.top-players .player-boxes::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* LIVE NOW - HOW TO PLAY */
+.live_now,
+.how_to_play,
+.leaderboard,
+.settings {
+  background: linear-gradient(
+    180deg,
+    rgba(80, 72, 128, 0.5) 0%,
+    rgba(80, 72, 128, 0.04) 100%
+  );
+  /* stroke blue */
+
+  border: 1px solid rgba(0, 178, 255, 0.65);
+  backdrop-filter: blur(2px);
+  /* Note: backdrop-filter has minimal browser support */
+}
+
+/* LEADERBOARD TABLE */
+.leaderboard_table {
+  width: 100%;
+  text-align: center;
+}
+
+.leaderboard_table th {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+  padding-bottom: 26px;
+}
+
+.leaderboard_table tr td {
+  padding: 1rem 0;
+  font-size: 20px;
+  line-height: 35px;
+}
+
+/* PROFILE */
+.profile_avatar_bg {
+  background: linear-gradient(134deg, #C322FF, #00BAE1);
+}
