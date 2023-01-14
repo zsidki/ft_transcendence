@@ -1,11 +1,14 @@
 import React from "react";
-
+import friend_image from "../../images/user_img2.png";
+import { Link } from "react-router-dom";
 function TableItem(props) {
   // INTEGRATE DATA
-  const { id, rank, image, name, win, lose, matches } = props.data;
+  const {rank,  name, win, lose,avatar} = props.data;
+
+
   return (
     <>
-      <tr key={id}>
+      <tr >
         {/* RANK */}
         <td>{rank}</td>
         <td className="flex items-center">
@@ -13,12 +16,12 @@ function TableItem(props) {
           <div className="flex-1">
             <img
               className="w-12 h-12 rounded-full m-auto"
-              src={image}
+              src={avatar}
               alt="user-img"
             />
           </div>
           {/* NAME */}
-          <span className="flex-1">{name}</span>
+          <span className="flex-1"><Link to={`/user/${name}`}>{name}</Link></span>
         </td>
 
         {/* WIN */}
@@ -26,7 +29,7 @@ function TableItem(props) {
         {/* LOSE */}
         <td>{lose}</td>
         {/* MATCHES */}
-        <td>{matches}</td>
+        <td>{win + lose}</td>
       </tr>
     </>
   );

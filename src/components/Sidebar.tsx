@@ -1,4 +1,6 @@
+// @ts-nocheck
 import React from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../images/logo.svg";
 import logo_text from "../images/logo_text.svg";
 import explore_icon from "../images/explore_icon.svg";
@@ -11,10 +13,22 @@ import settings_icon from "../images/settings_icon.svg";
 import user_img from "../images/user_img.png";
 import exit_icon from "../images/exit_icon.svg";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import { useLocation } from "react-router-dom";
+import UserSocketContext from "../context/userSocket";
+import {useAccounts} from "./hooks/useAccount";
 
-function Sidebar(props) {
+const Sidebar= (props ) =>  {
+  const handlelogout = () => {
+    window.location = `${process.env.REACT_APP_API_URL}/users/logout`;
+  };
+  const [data, setData] = useState([]);
+ const {isAuthenticated, me} = useAccounts();
+
+ useEffect(() => {
+    if (isAuthenticated && me)
+      setData(me);
+ },[isAuthenticated, me]);
   // FUNCTION TO OPEN SIDEBAR
   const handleMouseOver = () => {
     props.setIsHovering(true);
@@ -41,8 +55,6 @@ function Sidebar(props) {
         className={
           props.isHovering ? "sidebar transition active" : "sidebar transition"
         }
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
       >
         {/* SIDEBAR HEADER WITH LOGO */}
         <div className="sidebar-header flex items-center justify-center h-[70px]">
@@ -51,7 +63,7 @@ function Sidebar(props) {
         </div>
 
         <div className="bg-[#2c2f4880] h-full flex flex-col">
-          <div className="pl-5 flex w-full h-[44px] items-center border-b border-[#574F85]">
+          <div className="pl-5 flex w-full h-[44px] items-center border-b border-[#574F85]" onClick={() => props.setIsHovering(!props.isHovering)} >
             {/* EXPLORE LINK */}
             <Link
               href="#abc"
@@ -63,7 +75,7 @@ function Sidebar(props) {
               </span>
 
               {/* TEXT */}
-              <span className="sidebar-link-text text-[17px] leading-[20px] text-white font-bold">
+              <span className="sidebar-link-text text-[17px] leading-[20px] text-white font-bold" >
                 Explore
               </span>
             </Link>
@@ -112,7 +124,7 @@ function Sidebar(props) {
                     width="24px"
                     height="24px"
                     alt="icon"
-                  />
+                  />  
                 </span>
 
                 {/* TEXT */}
@@ -124,9 +136,13 @@ function Sidebar(props) {
 
             {/* GAME LINK */}
             <li className="flex w-full h-[40px] items-center">
-              <Link
-                href="#abc"
-                className="flex items-center h-full w-full pl-[9px] rounded-l-[5px]"
+            <Link
+                className={
+                  splitLocation[1] === "game"
+                    ? "flex items-center h-full w-full pl-[9px] rounded-l-[5px] bg-[#00000080]"
+                    : "flex items-center h-full w-full pl-[9px] rounded-l-[5px]"
+                }
+                to="/gamesettings"
               >
                 {/* ICON */}
                 <span className="sidebar-link-icon text-2xl">
@@ -170,9 +186,13 @@ function Sidebar(props) {
 
             {/* LIVE LINK */}
             <li className="flex w-full h-[40px] items-center">
-              <Link
-                href="#abc"
-                className="flex items-center h-full w-full pl-[9px] rounded-l-[5px]"
+            <Link
+                className={
+                  splitLocation[1] === "live"
+                    ? "flex items-center h-full w-full pl-[9px] rounded-l-[5px] bg-[#00000080]"
+                    : "flex items-center h-full w-full pl-[9px] rounded-l-[5px]"
+                }
+                to="/live"
               >
                 {/* ICON */}
                 <span className="sidebar-link-icon text-2xl">
@@ -233,13 +253,15 @@ function Sidebar(props) {
                 <div className="relative">
                   <img
                     className="rounded-full object-cover"
-                    src={user_img}
+                    src={data.avatar}
                     width="40px"
                     height="40px"
                     alt="user-img"
                   />
                   {/* ONLINE TAG */}
                   {/* use class "red" instead of "green" to change it to offline */}
+                  {/* i want to change the tag to green when offline and red when online*/}
+                  
                   <span className="online-tag green"></span>
                 </div>
               </div>
@@ -248,18 +270,18 @@ function Sidebar(props) {
                 {/* USER DETAILS */}
                 <div className="pr-[18px]">
                   <h4 className="text-white text-[14px] leading-[20px] font-medium opacity-90">
-                    ZaAk Sidki
+                    {data.username}
                   </h4>
                   <p className="text-white text-[12px] leading-[18px] opacity-30">
                     zsidki
                   </p>
                 </div>
                 {/* EXIT ICON */}
-                <img
+                <button onClick={handlelogout}><img
                   className="pr-2 cursor-pointer"
                   src={exit_icon}
                   alt="exit-icon"
-                />
+                /></button>
               </div>
             </div>
           </div>
@@ -270,3 +292,11 @@ function Sidebar(props) {
 }
 
 export default Sidebar;
+
+
+
+
+
+
+
+

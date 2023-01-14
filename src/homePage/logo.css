@@ -1,0 +1,13 @@
+.logo{
+    position: fixed;
+    margin: auto;
+}
+
+.logo img{
+    height: 1600px;
+    width: 100%;
+}
+
+.fref:active{
+    color: #06C2CF;
+}

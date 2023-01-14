@@ -2,7 +2,7 @@ import React from "react";
 import PlayerItem from "./PlayerItem";
 import { TopPlayersData } from "./TopPlayersData";
 
-function TopPlayers() {
+function TopPlayers() : JSX.Element {
   return (
     <>
       <div className="top-players rounded-3xl">

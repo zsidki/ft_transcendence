@@ -1,5 +1,5 @@
 import React from "react";
-import play_video_icon from "../../images/play_video_icon.svg";
+import play_video_icon from '../../images/play_video_icon.svg';
 
 function LiveNow() {
   return (

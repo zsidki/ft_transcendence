@@ -1,9 +1,29 @@
-import React from "react";
+import React , { useContext, useEffect, useState }from "react";
 import back_arrow from "../../images/back_arrow.svg";
-import { TableData } from "./TableData";
-import TableItem from "./TableItem";
 
+import TableItem from "./TableItem";
+import axios from "axios";
+import {fetchAccountService} from "../../utils/fetchAccountService";
 function TableLeaderboard() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+      fetchAccountService("games/leaderboard", "GET", null, null)
+          .then((res) => {
+            setData(res);
+          }).catch((err) => {
+            console.log(err);
+          });
+    // axios.get(`${process.env.REACT_APP_API_URL}/games/leaderboard`, {
+    //   withCredentials: true,
+    // }).then((res) => {
+    //   setData(res.data);
+    //
+    //   console.log(res.data);
+    // }).catch((err) => {
+    //   console.table(err);
+    //
+    // })
+  },[]);
   return (
     <>
       <div className="px-16 py-8">
@@ -20,9 +40,14 @@ function TableLeaderboard() {
           </thead>
           <tbody>
             {/* TABLE LIST */}
-            {TableData.map((loopData) => (
-              <TableItem key={loopData.id} data={loopData} />
-            ))}
+            {data?.map((loopData, index) => {
+              
+              if(index < 20)
+              return (<TableItem key={index} data={{rank : index + 1,name : loopData.username,
+                win: loopData.gameswon, lose: loopData.gameslost,avatar : loopData.avatar}} />)
+
+            
+            })}
           </tbody>
         </table>
 
