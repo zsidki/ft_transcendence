@@ -17,7 +17,7 @@ const TopButton = (props:any) => {
         <>
             <div ref={props?.ref} title={props?.title} className="t-butt" style={props?.style} onClick={handle_submit} >
                 <div className="t_icone" style={props.s_padding} >
-                    <img src={props.src} alt=""  />
+                    <img src={props.src} alt="" className='icon_img' style={props.size} />
                     {num}
                 </div>
             </div>

@@ -38,12 +38,12 @@ const duelhandl = () => {
   //redirect to /game?from=?to=
   let a;
   socket.emit("interact", {username: notify.from , type: "accepted", from: data.username , mode:challengemode }, (data: any) => {
-    console.log("response",data);
+    //console.log("response",data);
     redirectduel(data.challenge);
   });
   
   
-  console.log("challenge accept", {username: notify.from , type: "accepted", from: data.username})
+  //console.log("challenge accept", {username: notify.from , type: "accepted", from: data.username})
 
  
 }
@@ -55,14 +55,14 @@ const handleDissmiss = () => {
 
 useEffect(() => {
   socket.on('notif', (res) => {
-    console.log("zok",res);
+    //console.log("zok",res);
     if(res.type === "challenge"){
       setNotify({isOpen: true, messege: 'you have been challenged by ' + res.from + ' to a game of pong mode : ' + res.mode, from: res.from});
-      console.log("you have been  challenged by " + res.from + " to a game of pong" )
+      //console.log("you have been  challenged by " + res.from + " to a game of pong" )
       setChallenge(true);
     setChallengemode(res.mode);}
     if(res.type === "accepted"){
-      console.log("accepted",res);
+      //console.log("accepted",res);
       //setDuelUrl(res.challenge);
 
       

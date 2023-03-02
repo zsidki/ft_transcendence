@@ -18,6 +18,7 @@ function CoverGame() {
           className="absolute bottom-[-9%] left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
           src={play_now_button}
           alt="play-now-button"
+          onClick={()=>window.location.replace('/gamesettings')}
         />
       </div>
     </>

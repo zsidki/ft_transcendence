@@ -3,52 +3,53 @@ import { useContext, useEffect, useState } from "react";
 import profile_cover_img from "../../images/profile_cover_img.png";
 import avatar_img from "../../images/avatar_img.png";
 import axios from "axios";
-import { useLocation } from "react-router-dom"
+import {useLocation, useParams, useSearchParams} from "react-router-dom"
 import UserSocketContext from "../../context/userSocket";
 import { ClassNames } from "@emotion/react";
 
 import ProfileInteraction from "./interactions";
 import {useAccounts} from "../hooks/useAccount";
 import {fetchAccountService} from "../../utils/fetchAccountService";
-function ProfileSection(props) {
-  const socket = useContext(UserSocketContext);
-  const [data, setData] = useState([]);
-  const [wins, setWin] = useState([]);
-  const [lost, setlose] = useState([]);
-  const location = useLocation();
+import {userStatus} from "../../interfaces/account.interface";
+function ProfileSection({}) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [hediaDaba , setHediaDaba] = useState(false);
   const[status, setStatus] = useState("offline");
-  const[myusername, setUser] = useState("");
-  const {isAuthenticated, me} = useAccounts();
+  const[user, setUser] = useState(undefined);
+  const {isAuthenticated, me, getAccountByUserId,isLoading} = useAccounts();
 
-  const path = window.location.pathname.split("/").at(-1);
   useEffect(() => {
+    const username = searchParams.get("username");
+    if(!username){
+      setUser(me);
+      setHediaDaba(false);
+    }
+  },[searchParams, me]);
+
+
+  useEffect( () => {
+    const username = searchParams.get("username");
+    if (username && username !== me.username) {
+
+      getAccountByUserId(username)
+          .then((res) => {
+            setUser(res);
+            setHediaDaba(true);
+          }).catch((err) => {
+        console.log(err);
+
+      });
+      return;
+    }
+
     if (isAuthenticated) {
       setUser(me);
+      setHediaDaba(false);
     }
-  },[isAuthenticated]);
-  useEffect(() => {
-    const endPoint = path === 'profile' ? "users/me" : `users/username/${path}`;
-    fetchAccountService(`${endPoint}`)
-        .then((res) => {
-      setData(res);
-      console.log(res);
-    }).catch((err) => {
-      console.table(err);
-    })
-    
-  },[location]);
-  useEffect(() => {
-    // print the response from the server
-    console.log("ttttt");
-    console.log(data.username)
-    socket.on('userstatus', (res) => {
-      if(res.username === data.username){
-        setStatus(res.status);
-      }
-     });
-    socket.emit("getUserStatus", {username: data.username}, (data) => { setStatus(data.status); });
-    console.log("aaaaa");
-  },[data.username]);
+
+
+  },[isAuthenticated, me, isLoading]);
+
 
   return (
     <>
@@ -76,22 +77,25 @@ function ProfileSection(props) {
                 {/* AVATAR IMAGE */}
                 <img
                   className="w-full h-full object-cover rounded-full"
-                  src={data.avatar}
+                  src={user?.avatar}
                   alt="avatar"
                 />
                 {/* use class "red" instead of "green" to change it to offline */}
                   {/* i want to change the tag to green when offline and red when online*/}
-                  <span className={`bottom-0 left-5 absolute bd w-4 h-4 ${status == "online" ? "bg-green-500" : ""} ${status == "offline" ? "bg-red-500" : ""}${status == "in game" ? "bg-yellow-500" : ""}  border-white dark:border-gray-800 rounded-full`}></span>
+                  <span className={`bottom-0 left-5 absolute bd w-4 h-4 
+                  ${user?.status  === userStatus.ONLINE ? "bg-green-500" : ""} ${user?.status  === userStatus.OFFLINE
+                      ? "bg-red-500" : ""}${user?.status  === userStatus.INGAME
+                      ? "bg-yellow-500" : ""}  border-white dark:border-gray-800 rounded-full`}></span>
                  
                   
               </div>
              
               {/* USER DETAILS */}
               <h4 className="text-[20px] leading-[30px] font-medium mb-px">
-                {data.username}
+                {user?.username}
               </h4>
               <span className="text-[14px] leading-[21px] opacity-50 font-light">
-                {data.email}
+                {user?.email}
               </span>
             </div>
           </div>
@@ -104,8 +108,8 @@ function ProfileSection(props) {
         </div>
     <div className="flex justify-center w-full">
 
-    {(path !== 'profile' && myusername !== data.username) && (
-    <ProfileInteraction status={status} username={data.username}/>
+    { hediaDaba && (
+    <ProfileInteraction status={status} user={user}/>
 )}
     </div>
 

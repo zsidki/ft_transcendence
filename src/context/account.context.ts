@@ -1,5 +1,5 @@
 import {createContext} from 'react'
-import {account} from "../interfaces/account.interface";
+import {account, userRelation, userStatus} from "../interfaces/account.interface";
 
 
 
@@ -13,11 +13,27 @@ const accountsContextInitialValues= {
     getAccountByUserId: (userId: string) : Promise<account> => {
         return Promise.reject("sdf");
     },
-    isAuthenticated: false,
-    getFollowers(userId: string ) : Promise<account[]> {
+    followAccount: (userName: string) : Promise<account> => {
         return Promise.reject("sdf");
     },
-    authenticate: () => {
+    unfollowAccount: (userName: string) : Promise<account> => {
+        return Promise.reject("sdf");
+    },
+    getLeaderBoard: () : Promise<account[]> => {
+        return Promise.reject("sdf");
+    },
+    blockUser: (userId: string) => {
+
+    },
+    unBlockUser: (userId: string) => {
+
+    },
+    leaderBoard: [] as account[],
+    isAuthenticated: false,
+    accounts: [] as account[],
+    followers: [] as account[],
+    updateMyStatus: (status: userStatus)=>{},
+    authenticate: (isFirstTime: boolean) => {
 
     },
     logout: () => {
@@ -25,7 +41,7 @@ const accountsContextInitialValues= {
     },
     isLoading: false,
     error: false,
-    me: undefined as account | undefined,
+    me: undefined as userRelation | undefined,
 
 }
 

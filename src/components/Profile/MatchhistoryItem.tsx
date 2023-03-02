@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-type MatchProps= {
-  opid: string;
-  winnerscore: number;
-  loserscore: number;
-  time : string;
-  avatar: string;
-}
-function MatchhistoryItem(props: MatchProps) {
+import {gameHistory} from "./MatchHistory";
+// type MatchProps= {
+//   opid: string;
+//   winnerscore: number;
+//   loserscore: number;
+//   time : string;
+//   avatar: string;
+// }
+function  MatchhistoryItem({game}:{game:gameHistory}) {
   
   return (
     <>
@@ -17,21 +18,21 @@ function MatchhistoryItem(props: MatchProps) {
             <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
               <img
                 className="rounded-full"
-                src={props.avatar}
+                src={game.avatar}
                 width="40"
                 height="40"
-                alt={props.opid}></img>
+                alt={game.opid}></img>
             </div>
             <div className="font-medium text-gray-800">
-              <Link to={`/user/${props.opid}`}>{props.opid}</Link>
+              <Link to={`/user/${game.opid}`}>{game.opid}</Link>
             </div>
           </div>
         </td>
         <td className="p-2 whitespace-nowrap">
-          <div className="text-left"> {` ${props.winnerscore} - ${props.loserscore}`}</div>
+          <div className="text-left"> {` ${game.winnerscore} - ${game.loserscore}`}</div>
         </td>
         <td className="p-2 whitespace-nowrap">
-          <div className="text-left font-medium text-green-500">{props.time}</div>
+          <div className="text-left font-medium text-green-500">{game.time}</div>
         </td>
         <td className="p-2 whitespace-nowrap">
           <div className="text-lg text-center">ARAM</div>

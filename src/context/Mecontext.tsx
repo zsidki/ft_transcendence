@@ -14,7 +14,8 @@ let User = ({Userid:'',username: '', email: '', avatar: '',userconfig:{is2FA : f
         User.avatar = res.data.avatar;
         User.userconfig = res.data.userconfig;
       
-    }).catch((err) => {console.table(err);})
+    }).catch((err) => {//console.table(err);
+         })
     
     const UserContext = createContext(User);
     export default UserContext;

@@ -53,6 +53,19 @@ padding: 8px 0px 0px 8px;
     border-radius: 999px;
 }
 
+.room_avatar{
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: flex-end;
+padding: 8px 0px 0px 8px;
+}
+
+.room_avatar img{
+    width: 32px;
+    border-radius: 999px;
+}
+
 .c_text{
     display: flex;
     flex-direction: column;
@@ -92,7 +105,7 @@ padding: 8px 0px 0px 8px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 17px;
     line-height: 18px;
     color: #E2E5E9;
 }
@@ -124,11 +137,23 @@ padding: 8px 0px 0px 8px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400px;
-    font-size: 14px;
+    font-size: 17px;
+    line-height: 21px;
+    color: #eae8ef;
+}
+
+
+.Room_masssg{
+    width: 200px;
+    height: auto;
+    word-wrap:break-word;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400px;
+    font-size: 16px;
     line-height: 18px;
     color: #8A898E;
 }
-
 .c_user img{
     width: 14px;
     height: 14px;
@@ -138,6 +163,24 @@ padding: 8px 0px 0px 8px;
     position:relative;
     left: -18%;
     background: #1CC800;
+    border-radius: 20px;
+    height : 7px;
+    width: 7px;
+}
+
+.offline {
+    position:relative;
+    left: -18%;
+    background: #c80000;
+    border-radius: 20px;
+    height : 7px;
+    width: 7px;
+}
+
+.ingame {
+    position:relative;
+    left: -18%;
+    background: #c88500;
     border-radius: 20px;
     height : 7px;
     width: 7px;

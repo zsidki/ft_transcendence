@@ -1,0 +1,14 @@
+--cui-toast-padding-x: #{$toast-padding-x};
+--cui-toast-padding-y: #{$toast-padding-y};
+--cui-toast-spacing: #{$toast-spacing};
+--cui-toast-max-width: #{$toast-max-width};
+--cui-toast-font-size: #{$toast-font-size};
+--cui-toast-color: #{$toast-color};
+--cui-toast-bg: #{$toast-background-color};
+--cui-toast-border-width: #{$toast-border-width};
+--cui-toast-border-color: #{$toast-border-color};
+--cui-toast-border-radius: #{$toast-border-radius};
+--cui-toast-box-shadow: #{$toast-box-shadow};
+--cui-toast-header-color: #{$toast-header-color};
+--cui-toast-header-bg: #{$toast-header-background-color};
+--cui-toast-header-border-color: #{$toast-header-border-color};

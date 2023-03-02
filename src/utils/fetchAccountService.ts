@@ -4,16 +4,14 @@ const fetchAccountService = async (prefix: string ,
                                    hasBody= false,
                                    body= undefined as any,
                                    extraHeaders = undefined as any) => {
-    const token = localStorage.getItem('token');
-    console.log(token);
+    const token = sessionStorage.getItem('token');
+    //console.log(token);
     const url = `${process.env.REACT_APP_ACCOUNT_API_URL}${prefix}`;
     const headers = new Headers();
     if (!extraHeaders)
     headers.append('Content-Type', 'application/json');
     else
-        extraHeaders.forEach((key : any, val: any) =>{
-            headers.append(key, val);
-        })
+        headers.append('Content-Type', 'multipart/form-data');
     headers.append('Authorization', `Bearer ${token}`);
     let options = {
         method,
@@ -22,19 +20,20 @@ const fetchAccountService = async (prefix: string ,
         withCredentials: true,
         body: undefined,
     } as RequestInit;
-    console.log(options);
-    if (hasBody && body) {
+    //console.log(options);
+    if (hasBody && body && !extraHeaders) {
         options.body = JSON.stringify(body);
     }
+    else if (hasBody)
+        options.body = body;
     return fetch(url, options)
         .then((response) => {
-            console.log(response);
-            if (response.status === 401) {
+            if (response.status > 300) {
                 throw new Error('Unauthorized');
             }
             return response.text();
         }).then((data) => {
-            console.log(data);
+            //console.log(data);
             return JSON.parse(data);
         });
 
@@ -44,7 +43,8 @@ const fetchChatService = async (prefix: string ,
                                    method= 'GET',
                                    hasBody= false,
                                    body= undefined as any ) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
+    //console.log(token);
     const url = `${process.env.REACT_APP_CHAT_API_URL}${prefix}`;
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -54,17 +54,22 @@ const fetchChatService = async (prefix: string ,
         headers,
         mode: 'cors',
         withCredentials: true,
-        body: '',
+        body: undefined,
     } as RequestInit;
     if (hasBody && body) {
         options.body = JSON.stringify(body);
     }
+    //console.log(options);
+    //console.log(url);
     return fetch(url, options)
         .then((response) => {
-            if (response.status === 401) {
+            if (response.status > 300) {
                 throw new Error('Unauthorized');
             }
-            return response.json();
+            return response.text();
+        }).then((data) => {
+            //console.log(data);
+            return JSON.parse(data);
         });
 
 }

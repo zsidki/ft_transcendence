@@ -28,7 +28,7 @@
             fetchAccountService(`users/username` ,'PATCH',true ,
                 { username: username })
                 .then((res) => {
-        console.log(res);
+        //console.log(res);
         window.location.reload();
         }).catch((err) => {
             if (err.response.status === 409) {
@@ -45,9 +45,10 @@
             <Stack direction='row' spacing={2}>
             <TextField id="user_input_custom"  variant="filled" error={error}
             value={username}
-                                onInput={ e =>{setErrorMessage('new username');setError(false);
-                                const target = e.target as HTMLTextAreaElement;
-                                ;setname(target.value)}}
+                                onInput={ e =>{
+                                    setErrorMessage('new username');
+                                    setError(false);
+                                const target = e.target as HTMLTextAreaElement;setname(target.value)}}
             className='max-w-xs' sx={{ input: { color: 'white' } }} label={errorMessage}  color="primary" />
             <Button onClick={handleClick} id="submit-btn" className="submit-button" size="small">submit</Button>
             </Stack>

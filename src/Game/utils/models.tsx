@@ -33,6 +33,7 @@ interface GameState {
     lastscored: string;
 
     mod: string;
+    ready: Array<number>;
 }
 
 export type {GameState};

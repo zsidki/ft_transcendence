@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  front-end:
+    build: ./
+    container_name: front-end
+    ports:
+      - 3000
+    networks:
+      - front-end
+
+    restart: unless-stopped
+
+networks:
+  front-end:
+    external:
+      name: front-end

@@ -52,7 +52,7 @@ const Navbar = () => {
     <Ss>
       <h1>DragonPong</h1>
       <Pright>
-        <NavButton type="button" onClick={() => {}} title="login" />
+        <NavButton type="button" onClick={()=> window.location.replace('/login')} title="login"  />
       </Pright>
     </Ss>
   );

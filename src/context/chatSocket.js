@@ -4,7 +4,7 @@ import socketIOClient from "socket.io-client";
 const socket  = socketIOClient(`${process.env.REACT_APP_ACCOUNT_WS_URL}chat`, {
   transports: ["websocket"],
   extraHeaders: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
+    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
   },
   withCredentials: true,
 });

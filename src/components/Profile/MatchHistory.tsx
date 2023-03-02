@@ -3,11 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { accountContext } from "../../context/account.context";
 import FriendItem from "./FriendItem";
 import MatchhistoryItem from "./MatchhistoryItem";
-import { useLocation } from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
 import { me } from "../../interfaces/me.interface";
 import {fetchAccountService} from "../../utils/fetchAccountService";
+import {useAccounts} from "../hooks/useAccount";
+import {account} from "../../interfaces/account.interface";
+import avatar from "../../chat/DM/Avatar";
 type History = {
   gameId: string,
   winnerid: string,
@@ -24,36 +27,67 @@ type History = {
       avatar: string
   } 
 }
+export type gameHistory = {
+    avatar : string,
+    opid : string,
+    winnerscore : number,
+    loserscore : number,
+    time : string
+};
+
 function MatchHistory() {
-  const [data, setData] = useState<History[]>([]);
-  const [me, setME] = useState<me | undefined>(undefined);
+
+  // const [me, setME] = useState<me | undefined>(undefined);
+  const [history, setHistory] = useState([]);
+
   const [expanded, setExpanded] = useState(false);
+  // const [user, setUser] = useState<account | undefined>(undefined);
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
+  const [searchParam, setSearchParam] = useSearchParams();
+  const { me} = useAccounts();
   // const {getAccounts} = useContext(accountContext);
-  const path = window.location.pathname.split("/").at(-1);
+  // const path = window.location.pathname.split("/").at(-1);
   useEffect(() => {
-    const endPoint =
-      path === "profile" ? "games/history" : `games/history/${path}`;
-    const endie = path === "profile" ? "users/me" : `users/username/${path}`;
+      const userId = searchParam.get("id");
+      setLoading(true);
 
-    fetchAccountService(`${endPoint}`)
-      .then((res) => {
-        console.log(">>>", res);
-        setData(res);
-      })
-      .catch((err) => {});
-
-    fetchAccountService(`${endie}`)
-      .then((res) => {
-        console.log(">>>", res);
-        setME(res);
-      })
-      .catch((err) => {
-        console.table(err);
-      });
-    console.log("executed inside matchhistory");
-  }, [location]);
+        if (userId && userId.length > 0) {
+          // const user =  accounts.find((account) => account.Userid === userId);
+            fetchAccountService('games/history/'+ userId).then((res) => {
+                setHistory(res.map((game: History) => {
+                   const isLoser = game.loserid === userId;
+                   return {
+                          avatar: isLoser ? game.winner.avatar : game.loser.avatar,
+                            opid: isLoser ? game.winnerid : game.loserid,
+                            winnerscore: isLoser ? game.Scorelose : game.Scorewin,
+                            loserscore: isLoser ? game.Scorewin : game.Scorelose,
+                            time: game.playedat
+                   }
+                }));
+                setLoading(false);
+            }).catch((err) => {
+              setLoading(false);
+                console.log(err);
+            });
+        }else {
+            fetchAccountService('games/history').then((res) => {
+                setHistory(res?.map((game: History) => {
+                  const isLoser = game.loserid === me?.Userid;
+                  return {
+                    avatar: isLoser ? game.winner.avatar : game.loser.avatar,
+                    opid: isLoser ? game.winnerid : game.loserid,
+                    winnerscore: isLoser ? game.Scorelose : game.Scorewin,
+                    loserscore: isLoser ? game.Scorewin : game.Scorelose,
+                    time: game.playedat
+                  }
+                }));
+              setLoading(false);
+            }).catch((err) => {
+              setLoading(false);
+                console.log(err);
+            });
+        }
+  },[me]);
 
   // eslint-disable-next-line no-lone-blocks
   {
@@ -87,25 +121,9 @@ function MatchHistory() {
                 </thead>
                 <tbody className="text-sm divide-y divide-gray-100">
                   {/* Child component: Row */}
-                  {data.map((game, index) => {
-                    const hist = {
-                      opid:
-                        game.winner.username === me?.username
-                          ? game.loser.username
-                          : game.winner.username,
-                      avatar:
-                        game.winner.username === me?.username
-                          ? game.loser.avatar
-                          : game.winner.avatar,
-                      winnerscore: game.Scorewin,
-                      loserscore: game.Scorelose,
-                      time: new Date(game.playedat).toISOString().slice(0, 10), //.replace(/-/g,""),
-                    };
-
-                    if (!expanded) {
-                      if (index < 5)
-                        return <MatchhistoryItem key={index} {...hist} />;
-                    } else return <MatchhistoryItem key={index} {...hist} />;
+                  {history?.map((game, index) => {
+                    // console.log(game);
+                        return <MatchhistoryItem key={index} game={game} />;
                   })}
                   {/* More Row components can go here */}
                 </tbody>

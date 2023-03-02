@@ -36,7 +36,7 @@ cursor: pointer;
 const NavButton = (props: any) => {
     return (
 
-            <Pw3 onClick={props.onClick}>
+            <Pw3 onClick={props.onClick} >
                 {props.title}
             </Pw3>
 

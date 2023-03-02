@@ -19,8 +19,9 @@ import UserSocketContext from "../context/userSocket";
 import {useAccounts} from "./hooks/useAccount";
 
 const Sidebar= (props ) =>  {
+  const {logout} = useAccounts();
   const handlelogout = () => {
-    window.location = `${process.env.REACT_APP_API_URL}/users/logout`;
+      logout();
   };
   const [data, setData] = useState([]);
  const {isAuthenticated, me} = useAccounts();
@@ -53,11 +54,12 @@ const Sidebar= (props ) =>  {
     <>
       <div
         className={
-          props.isHovering ? "sidebar transition active" : "sidebar transition"
+          props.isHovering ? "sidebar transition active " : "sidebar transition"
         }
+        style={{zIndex: "9"}}
       >
         {/* SIDEBAR HEADER WITH LOGO */}
-        <div className="sidebar-header flex items-center justify-center h-[70px]">
+        <div className="sidebar-header flex items-center justify-center h-[70px]" onClick={()=> window.location.replace('/')}>
           <img className="" src={logo} alt="logo" />
           <img className="" src={logo_text} alt="logo-text" />
         </div>
@@ -138,7 +140,7 @@ const Sidebar= (props ) =>  {
             <li className="flex w-full h-[40px] items-center">
             <Link
                 className={
-                  splitLocation[1] === "game"
+                  splitLocation[1] === "game" || splitLocation[1] === "gamesettings"
                     ? "flex items-center h-full w-full pl-[9px] rounded-l-[5px] bg-[#00000080]"
                     : "flex items-center h-full w-full pl-[9px] rounded-l-[5px]"
                 }

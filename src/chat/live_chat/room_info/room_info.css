@@ -69,7 +69,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 16px;
     /* identical to box height, or 133% */
 
@@ -157,12 +157,20 @@
 
 .room_text {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     padding: 0px;
     height: inherit;
-    gap: 9px;
+    gap: 4px;
+}
+.error{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 8px;
+    color:  #FF0000;
 }
 .yoyo {
     position: absolute;
@@ -218,7 +226,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    gap: 6px;
+    gap: 15px;
     margin: 0px 16px;
     width: auto;
     height: 40px;

@@ -6,6 +6,7 @@ import FriendItem from "./FriendItem";
 import { FriendsData } from "./FriendsData";
 import styled from "styled-components";
 import {fetchAccountService} from "../../utils/fetchAccountService";
+import {useAccounts} from "../hooks/useAccount";
 type follow = {
   followId:    string,
   followerId: string,
@@ -25,23 +26,13 @@ type FriendItemProps = {
   avatar: string;
 }
 function Friends() {
-  const [data, setData] = useState<follow[]>([]);
+
   
   const [expanded, setExpanded] = useState<boolean>(false);  
-  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-    fetchAccountService(`users/follows`)
-        .then((res) => {
-      setData(res);
-      setLoading(false);
-    }).catch((err) => {
-      console.table(err);
-      setLoading(false);
-    })}, 1000);
-  },[]);
-  
+  const {me} = useAccounts();
+
+
   return (
     <>
       {//loading ? <div class="lds-dual-ring"></div>
@@ -58,45 +49,20 @@ function Friends() {
         </div>
         </div>
           
-        
-         {loading ? <div className="lds-dual-ring"></div>
-        : (
+
           
           <div className="mt-5 px-3 flex items-center justify-between flex-wrap gap-x-12 gap-y-6">
           {/* FRIENDS LIST */}
           {/* {data?.map((loopData) => (
               <FriendItem key={loopData.id} data={loopData} />
             ))} */}
-            { 
-              data?.map((friend, index) => {
-                const data : FriendItemProps =
-                  {
-                    userId: friend.followed.Userid,
-                    email: friend.followed.email,
-                    username: friend.followingId,
-                    avatar: friend.followed.avatar,
-                  }
-                  if (!expanded )
-                  {
-
-                  if (index < 8)
-                      return (
-                        <FriendItem key={index} {...data} />
-                      )
-
-                  }
-                  else
-                    return (
-                    <FriendItem key={index} {...data} />
-                  )
-                 // if(index % 3 === 0){(
-                //  return </div>
-               // )}
-              })
-            }
+            {
+              me && me.followers?.map((friend, index) =>
+                        <FriendItem key={index} friend={friend} />
+                )
+              }
 
             </div>
-          )}
         </div>
         
      //)

@@ -83,6 +83,7 @@ body {
 
 .sidebar.active {
   width: 320px;
+  min-width: 250px;
 }
 
 .sidebar .sidebar-header img:first-child {
@@ -122,6 +123,7 @@ body {
 .main-content {
   /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     rgba(0, 0, 0, 0.2); */
+    width: auto;
     background: #1d203e;
 }
 
@@ -136,14 +138,13 @@ body {
 }
 
 .top-players .shadow {
-  background: linear-gradient(
-    103.96deg,
-    rgba(0, 0, 0, 0.2) 4.92%,
-    rgba(86, 86, 86, 0) 103.4%
-  );
+  
+  background: #12151B;
+
   /* stroke blue */
 
-  border: 1px solid rgba(0, 178, 255, 0.65);
+  border: 1px solid #004CCC;
+
 }
 
 .top-players .player-boxes {
@@ -160,14 +161,10 @@ body {
 .how_to_play,
 .leaderboard,
 .settings {
-  background: linear-gradient(
-    180deg,
-    rgba(80, 72, 128, 0.5) 0%,
-    rgba(80, 72, 128, 0.04) 100%
-  );
+  background: #12151B;
   /* stroke blue */
 
-  border: 1px solid rgba(0, 178, 255, 0.65);
+    border: 1px solid #004CCC;
   backdrop-filter: blur(2px);
   /* Note: backdrop-filter has minimal browser support */
 }
@@ -179,16 +176,26 @@ body {
 }
 
 .leaderboard_table th {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 26px;
   font-weight: 700;
   border-bottom: 2px solid rgba(255, 255, 255, 0.7);
   padding-bottom: 26px;
+  padding-top: 26px;
+
 }
 
-.leaderboard_table tr td {
+.leaderboard_table tr{
   padding: 1rem 0;
   font-size: 20px;
+  line-height: 35px;
+  gap : 10px;
+}
+
+.leaderboard_table td {
+  padding: 1rem 0;
+  font-size: 20px;
+  padding-right: 1em;
   line-height: 35px;
 }
 
@@ -290,4 +297,169 @@ body {
 .live_table {
   width: 100%;
   text-align: center;
+}
+
+
+.Mode_root{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+  width: 950px;
+  height: 478px;
+  background: #12151B;
+  backdrop-filter: blur(2px);
+  border: 1px solid #004CCC;
+}
+
+.Mode_img {
+  width: 242px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+.Mode{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  width: 242px;
+  height: 230px;
+
+}
+
+.fa2_root{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 20px;
+
+}
+
+.fa2_input{
+  width: 100%;
+  height: 40px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  /* Support-Dark/Card-alt-background */
+  background: #0C0E12;
+  /* Support-Dark/Stroke */
+
+  border: 1px solid #004CCC;
+  border-radius: 8px;
+}
+
+.QR_code{
+  width: 250px;
+  height: 250px;
+
+  background: #D9D9D9;
+  border-radius: 2px;
+}
+
+
+
+
+.game_mode {
+  background: #12151B;
+  /* stroke blue */
+
+  border: 1px solid #004CCC;
+  backdrop-filter: blur(3px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  /* width: 100%; */
+  text-align: center;
+  width: 100%;
+  font-size: 40px;
+  line-height: 35px;
+  font-weight: 700;
+  /* padding: 26px; */
+  /* margin: 5px; */
+
+}
+
+.game_mode_text{
+  margin-bottom: 6px;
+}
+
+.title_mode{
+  margin-bottom: 34px;
+  margin-top: 25px;
+}
+
+
+.loader {
+	border-top-color: #3498db;
+	-webkit-animation: spinner 1.5s linear infinite;
+	animation: spinner 1.5s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+
+.badge{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  justify-content: center;
+  padding: 0px;
+  gap: 10px;
+
+  width: auto;
+  height: 100%;
+  padding-top: 10px;
+}
+
+.badge_color{
+  min-width: 20px;
+  height: 20px;
+  /* Static/Accent-red */
+  border-radius: 999px;
+  background: #FF0000;
+  font-size: 12px;
+}
+.badge_color_rooms{
+  min-width: 7px;
+  height: 7px;
+  /* Static/Accent-red */
+  border-radius: 999px;
+  background: #FF0000;
+  font-size: 12px;
+}
+
+.badge_color ul{
+  text-align: center;
+  font-size: 10px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.container:hover .card {
+  filter: blur(20px);
+  transform: scale(0.9);
+  opacity: 0.5;
 }

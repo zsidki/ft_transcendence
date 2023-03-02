@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import frame1 from '../images/TEAMpic.svg';
 import vector from '../images/Vector_1.svg';
 import Navbar  from './Navbar';
+import {useAccounts} from "../components/hooks/useAccount";
+import Loading from "../components/loading/loading";
 const Root = styled.div`
     display: flex;
 
@@ -239,6 +241,10 @@ const Numberdata = (props: any) => {
 }
 
 const Home= () => {
+    const {isLoading } = useAccounts();
+    if (isLoading) {
+        return <Loading/>
+    }
     return (
         <>
             <Navbar />
@@ -247,7 +253,7 @@ const Home= () => {
                 <h1>Discover, Play & Challenge Your Friends</h1>
                 <img src={vector} className="vector" />
                 <h2>DragonPong support realtime game, chat, group chat channel, ranking system and tournament.</h2>
-                <Btn>Discover Now</Btn>
+                <Btn onClick={()=> window.location.replace('/login')}>Discover Now</Btn>
                 <Numdata>
                 <Numberdata num="10+" name="Game Mode" />
                 <Numberdata num="600+" name="Players" />
